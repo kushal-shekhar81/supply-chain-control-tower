@@ -1,7 +1,7 @@
 # SAP side (ABAP Cloud on SAP BTP)
 
 From week 2, ABAP objects built in the BTP ABAP trial are pushed here with **abapGit**.
-This folder is then the GitHub copy of the SAP package `ZSCCT`.
+This folder is then the GitHub copy of your SAP package (`sap/src/`).
 
 ## One-time set-up (week 1)
 
@@ -10,10 +10,14 @@ This folder is then the GitHub copy of the SAP package `ZSCCT`.
 2. **Eclipse + ADT:** install Eclipse IDE for Java Developers, then add ABAP Development
    Tools from `https://tools.hana.ondemand.com/latest`.
 3. **Connect:** File → New → ABAP Cloud Project, using the service key or URL from step 1.
-4. **abapGit for ADT:** install the abapGit plug-in for Eclipse, then link package `ZSCCT`
-   to this repository's `sap/` folder.
-5. **Smoke test:** create package `ZSCCT` and a class `ZCL_SCCT_HELLO` that implements
-   `IF_OO_ADT_CLASSRUN`. Run it with F9 and check the console output.
+4. **Package:** create package `ZSCCT_<your initials>` (for example `ZSCCT_KS`) with
+   superpackage `ZLOCAL`. The trial system is shared, so names must be unique.
+5. **Smoke test:** create class `ZCL_SCCT_HELLO` that implements `IF_OO_ADT_CLASSRUN`.
+   Run it with F9 and check the console output.
+6. **abapGit for ADT:** Help → Install New Software → `https://eclipse.abapgit.org/updatesite/`.
+   Open the *abapGit Repositories* view, link this repository (branch `main`) to your package,
+   then Stage and Push using a GitHub personal access token.
+   `/.abapgit.xml` tells abapGit that ABAP objects live in `sap/src/`.
 
 ## Week 2 plan
 

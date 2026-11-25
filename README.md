@@ -59,9 +59,9 @@ You need Java 21, Maven 3.9+, Node 22+ and Docker.
 # 1. Infrastructure (Postgres, Kafka). Not needed yet in week 1, but this checks Docker works.
 docker compose up -d
 
-# 2. Backend: build, test, run the integration service on :8081
+# 2. Backend: build + test, install the shared modules locally, then run the integration service on :8081
 cd backend
-mvn verify
+mvn install
 mvn -pl integration-service spring-boot:run
 #   check: http://localhost:8081/actuator/health
 #          http://localhost:8081/api/v1/snapshot/summary
