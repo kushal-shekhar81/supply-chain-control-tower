@@ -1,0 +1,92 @@
+@if (loading()) {
+  <p class="status">Loading the latest snapshot…</p>
+} @else if (error()) {
+  <div class="status status--error">
+    <p>{{ error() }}</p>
+    <button type="button" (click)="load()">Try again</button>
+  </div>
+} @else if (summary(); as s) {
+  <section class="kpis" aria-label="Headline numbers">
+    <article class="kpi kpi--alert">
+      <span class="kpi__value">{{ s.openAogRequests }}</span>
+      <span class="kpi__label">Open AOG requests</span>
+    </article>
+    <article class="kpi">
+      <span class="kpi__value">{{ s.positionsBelowSafetyStock }}</span>
+      <span class="kpi__label">Stock positions below safety stock</span>
+    </article>
+    <article class="kpi">
+      <span class="kpi__value">{{ s.overduePurchaseOrderLines }}</span>
+      <span class="kpi__label">Overdue PO lines</span>
+    </article>
+    <article class="kpi">
+      <span class="kpi__value">{{ s.singleSourcedParts }} / {{ s.parts }}</span>
+      <span class="kpi__label">Single-sourced parts</span>
+    </article>
+  </section>
+
+  <section class="watchlist">
+    <header class="watchlist__header">
+      <h2>Watchlist</h2>
+      <div class="filters" role="group" aria-label="Filter by industry">
+        @for (option of ['ALL', 'AUTOMOTIVE', 'AEROSPACE']; track option) {
+          <button type="button"
+                  [class.active]="industry() === option"
+                  (click)="setIndustry($any(option))">
+            {{ option === 'ALL' ? 'All' : option === 'AUTOMOTIVE' ? 'Auto' : 'Aero' }}
+          </button>
+        }
+      </div>
+    </header>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Plant</th>
+            <th>Part</th>
+            <th class="num">Usable</th>
+            <th class="num">Safety</th>
+            <th class="num">Days of cover</th>
+            <th>Flags</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of visibleWatchlist(); track item.plantId + item.partId) {
+            <tr>
+              <td>{{ item.plantId }}</td>
+              <td>
+                <strong>{{ item.partId }}</strong>
+                <span class="muted">{{ item.description }}</span>
+              </td>
+              <td class="num">{{ item.usableStock | number }}</td>
+              <td class="num">{{ item.safetyStock | number }}</td>
+              <td class="num">
+                <span class="cover cover--{{ coverLevel(item) }}">
+                  {{ item.daysOfCover === null ? '–' : (item.daysOfCover | number: '1.1-1') }}
+                </span>
+              </td>
+              <td>
+                <div class="flags">
+                @if (item.aog) { <span class="tag tag--red">AOG</span> }
+                @if (item.criticality === 'HIGH') { <span class="tag">High criticality</span> }
+                @if (item.singleSourced) { <span class="tag">Single source</span> }
+                @if (item.overduePurchaseOrderLines > 0) {
+                  <span class="tag">{{ item.overduePurchaseOrderLines }} overdue PO</span>
+                }
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="6" class="muted">Nothing needs attention.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="footnote">
+    Source: {{ s.sourceSystem }} · {{ s.plants }} plants · {{ s.suppliers }} suppliers ·
+    as of {{ s.asOf | date: 'medium' }}
+  </p>
+}

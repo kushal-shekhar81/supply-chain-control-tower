@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: integration-service
+
+scct:
+  # Same seed = same data on every run, so demos are repeatable.
+  synthetic:
+    seed: 42
+  # "Today" for planning purposes is decided in the business's time zone, not the server's.
+  business-zone: Asia/Kolkata
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

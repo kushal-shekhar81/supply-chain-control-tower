@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Parent POM for the Supply Chain Control Tower backend.
+
+  Why a multi-module build?
+  Each module is one deployable or one shared library. The parent pins versions once
+  (Spring Boot BOM, Java level), so every service builds the same way - the Maven
+  equivalent of a "single source of truth", which is exactly what the control tower
+  does for supply chain data.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.2</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>io.scct</groupId>
+    <artifactId>scct-backend</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>scct-backend</name>
+    <description>Supply Chain Control Tower - backend services</description>
+
+    <properties>
+        <java.version>21</java.version>
+    </properties>
+
+    <modules>
+        <!-- Shared library: the canonical data model every service speaks -->
+        <module>canonical-model</module>
+        <!-- Plain-Java generator for the fictional companies' SAP-like data -->
+        <module>synthetic-data</module>
+        <!-- Week 1-3: pulls data from SAP (or synthetic), maps it, later publishes to Kafka -->
+        <module>integration-service</module>
+        <!-- Added in later weeks: visibility-service, exception-service, risk-service,
+             scenario-service, api-gateway -->
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.scct</groupId>
+                <artifactId>canonical-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.scct</groupId>
+                <artifactId>synthetic-data</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

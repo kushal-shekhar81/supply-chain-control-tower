@@ -1,0 +1,162 @@
+:host {
+  display: block;
+}
+
+.status {
+  padding: 2rem 0;
+  color: var(--muted);
+
+  &--error {
+    color: var(--red);
+  }
+
+  button {
+    margin-top: 0.75rem;
+  }
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  &__value {
+    font-size: 2rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__label {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  &--alert {
+    border-color: var(--red);
+
+    .kpi__value {
+      color: var(--red);
+    }
+  }
+}
+
+.watchlist__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 0.25rem;
+
+  button.active {
+    background: var(--ink);
+    color: var(--surface);
+  }
+}
+
+.table-wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  min-width: 760px; // scroll sideways on phones instead of squashing columns
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+th,
+td {
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  display: block;
+  color: var(--muted);
+}
+
+.cover {
+  display: inline-block;
+  min-width: 3rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  text-align: center;
+
+  &--red {
+    background: var(--red-soft);
+    color: var(--red);
+  }
+
+  &--amber {
+    background: var(--amber-soft);
+    color: var(--amber);
+  }
+
+  &--green {
+    background: var(--green-soft);
+    color: var(--green);
+  }
+}
+
+.flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.tag {
+  padding: 0.125rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+
+  &--red {
+    border-color: var(--red);
+    color: var(--red);
+    font-weight: 600;
+  }
+}
+
+.footnote {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
